@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priority Waste · Executive Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   PRIORITY WASTE · EXECUTIVE DASHBOARD
+   Built to official brand guidelines:
+     - Priority Yellow #FFC20E  (attention-grabbing element)
+     - Black          #000000  (structure and readability)
+     - Dark Gray      #333333  (secondary text)
+     - Light Gray     #F4F4F4  (backgrounds)
+     - Type: Oswald (display) + Open Sans (body)
+
+   Replace values marked with <!-- DATA:category.metric --> to
+   hydrate with live data.
+   ============================================================ */
+
+:root {
+  --yellow:      #FFC20E;
+  --yellow-hi:   #ffd043;
+  --yellow-deep: #E5A800;
+  --black:       #000000;
+  --dark-gray:   #333333;
+  --mid-gray:    #6b6b6b;
+  --light-gray:  #F4F4F4;
+  --line-gray:   #e2e2e2;
+  --white:       #FFFFFF;
+
+  --up:          #0A7C3A;
+  --down:        #D62828;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--light-gray);
+  color: var(--black);
+  font-family: 'Open Sans', system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+.wrap { max-width: 1400px; margin: 0 auto; padding: 28px 36px 64px; }
+
+/* ============================================================
+   MASTHEAD — solid black with yellow highlighter wordmark
+   ============================================================ */
+.masthead {
+  background: var(--black);
+  color: var(--white);
+  padding: 26px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
+}
+/* Caution-tape stripe under masthead — a subtle nod to the industry */
+.masthead::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 6px;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--yellow) 0 18px,
+    var(--black) 18px 24px
+  );
+}
+
+.brand-lockup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.wordmark {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.wordmark .priority { color: var(--white); }
+.wordmark .waste {
+  background: var(--yellow);
+  color: var(--black);
+  padding: 4px 10px 3px;
+  display: inline-block;
+}
+.tagline {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--yellow);
+}
+
+.masthead-meta {
+  display: flex;
+  gap: 32px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9e9e9e;
+}
+.masthead-meta > div > span {
+  display: block;
+  color: var(--white);
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  margin-top: 4px;
+}
+
+/* ============================================================
+   CONTROL BAR — tabs + actions
+   ============================================================ */
+.control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 22px;
+  font-size: 13px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.tabs {
+  display: flex;
+  gap: 0;
+  border: 2px solid var(--black);
+  background: var(--white);
+}
+.tab {
+  padding: 10px 18px;
+  border: none;
+  border-right: 2px solid var(--black);
+  cursor: pointer;
+  color: var(--dark-gray);
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--white);
+  transition: all .12s ease;
+}
+.tab:last-child { border-right: none; }
+.tab:hover { background: var(--light-gray); color: var(--black); }
+.tab.active { background: var(--yellow); color: var(--black); }
+
+.actions { display: flex; gap: 8px; }
+.btn {
+  padding: 10px 16px;
+  border: 2px solid var(--black);
+  background: var(--white);
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  cursor: pointer;
+  transition: all .12s ease;
+}
+.btn:hover { background: var(--black); color: var(--white); }
+.btn.primary {
+  background: var(--yellow);
+  color: var(--black);
+}
+.btn.primary:hover { background: var(--black); color: var(--yellow); }
+
+/* ============================================================
+   SECTION TITLES
+   ============================================================ */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 32px 0 14px;
+}
+.section-title h2 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--black);
+  position: relative;
+  padding-left: 14px;
+}
+.section-title h2::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 4px; bottom: 4px;
+  width: 4px;
+  background: var(--yellow);
+}
+.section-title .kicker {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+}
+.section-title .rule {
+  flex: 1;
+  height: 2px;
+  background: var(--black);
+}
+
+/* ============================================================
+   KPI STRIP — top line metrics
+   ============================================================ */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  background: var(--white);
+  border: 2px solid var(--black);
+}
+.kpi {
+  padding: 22px 22px 20px;
+  border-right: 1px solid var(--line-gray);
+  position: relative;
+  transition: background .15s ease;
+}
+.kpi:last-child { border-right: none; }
+.kpi::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; right: 0;
+  height: 4px;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .2s ease;
+}
+.kpi:hover::before { transform: scaleX(1); }
+.kpi:hover { background: #fffbec; }
+.kpi-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+  margin-bottom: 10px;
+}
+.kpi-value {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 38px;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  color: var(--black);
+}
+.kpi-value .unit {
+  font-size: 18px;
+  color: var(--mid-gray);
+  font-weight: 500;
+  margin-left: 2px;
+}
+.kpi-delta {
+  margin-top: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.kpi-delta.up { color: var(--up); }
+.kpi-delta.down { color: var(--down); }
+.kpi-delta .vs { color: var(--mid-gray); font-weight: 400; }
+
+/* ============================================================
+   DEPARTMENT GRID
+   ============================================================ */
+.dept-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  background: var(--white);
+  border: 2px solid var(--black);
+}
+.dept {
+  background: var(--white);
+  padding: 24px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 280px;
+  position: relative;
+  border-right: 1px solid var(--line-gray);
+  border-bottom: 1px solid var(--line-gray);
+  transition: background .18s ease;
+}
+.dept:nth-child(2n) { border-right: none; }
+.dept:nth-last-child(-n+2) { border-bottom: none; }
+.dept::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 5px; height: 100%;
+  background: var(--yellow);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .22s ease;
+}
+.dept:hover::before { transform: scaleY(1); }
+.dept:hover { background: #fffbec; }
+
+.dept-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--black);
+}
+.dept-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dept-num {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--black);
+  background: var(--yellow);
+  padding: 5px 9px 3px;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.dept-name {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+.dept-status {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 10px 4px;
+  background: var(--light-gray);
+  color: var(--dark-gray);
+  white-space: nowrap;
+  line-height: 1;
+}
+.dept-status.good  { background: #e3f1e6; color: var(--up); }
+.dept-status.watch { background: var(--dark-gray); color: var(--white); }
+.dept-status.risk  { background: var(--yellow); color: var(--black); }
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 20px;
+}
+.metric .m-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+  margin-bottom: 4px;
+}
+.metric .m-value {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: var(--black);
+}
+.metric .m-value .u {
+  font-size: 13px;
+  color: var(--mid-gray);
+  font-weight: 500;
+}
+.metric .m-delta {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 3px;
+}
+.metric .m-delta.up   { color: var(--up); }
+.metric .m-delta.down { color: var(--down); }
+.metric .m-delta.flat { color: var(--mid-gray); }
+
+.spark-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-gray);
+}
+.spark-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+}
+.spark { height: 30px; width: 150px; }
+.spark path.line { fill: none; stroke: var(--black); stroke-width: 2; }
+.spark path.fill { fill: var(--yellow); opacity: 0.35; }
+.spark .dot { fill: var(--yellow); stroke: var(--black); stroke-width: 1.5; }
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 30px;
+  width: 150px;
+}
+.bars .bar {
+  flex: 1;
+  background: var(--black);
+  opacity: 0.2;
+  transition: opacity .2s;
+}
+.bars .bar.accent { background: var(--yellow); opacity: 1; }
+.dept:hover .bars .bar { opacity: 0.35; }
+.dept:hover .bars .bar.accent { opacity: 1; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footnote {
+  margin-top: 30px;
+  padding: 16px 24px;
+  background: var(--black);
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  position: relative;
+}
+.footnote::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: -6px;
+  height: 6px;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--yellow) 0 18px,
+    var(--black) 18px 24px
+  );
+}
+.footnote .legend { display: flex; gap: 22px; align-items: center; }
+.footnote .legend .swatch {
+  display: inline-block;
+  width: 10px; height: 10px;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+.footnote .legend .g .swatch { background: #4ade80; }
+.footnote .legend .w .swatch { background: #9e9e9e; }
+.footnote .legend .r .swatch { background: var(--yellow); }
+.footnote .meta { color: #9e9e9e; font-weight: 400; letter-spacing: 0.08em; }
+.footnote .meta strong { color: var(--white); font-weight: 600; }
+
+/* ============================================================
+   ENTRANCE
+   ============================================================ */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.masthead, .control-bar, .kpi, .dept { animation: rise .5s ease both; }
+.kpi:nth-child(1) { animation-delay: .05s; }
+.kpi:nth-child(2) { animation-delay: .10s; }
+.kpi:nth-child(3) { animation-delay: .15s; }
+.kpi:nth-child(4) { animation-delay: .20s; }
+.kpi:nth-child(5) { animation-delay: .25s; }
+.dept:nth-child(1) { animation-delay: .30s; }
+.dept:nth-child(2) { animation-delay: .35s; }
+.dept:nth-child(3) { animation-delay: .40s; }
+.dept:nth-child(4) { animation-delay: .45s; }
+.dept:nth-child(5) { animation-delay: .50s; }
+.dept:nth-child(6) { animation-delay: .55s; }
+.dept:nth-child(7) { animation-delay: .60s; }
+.dept:nth-child(8) { animation-delay: .65s; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+  .wrap { padding: 20px 20px 48px; }
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .kpi { border-right: 1px solid var(--line-gray); border-bottom: 1px solid var(--line-gray); }
+  .kpi:nth-child(2n) { border-right: none; }
+  .kpi:last-child { grid-column: span 2; border-bottom: none; }
+}
+@media (max-width: 760px) {
+  .wrap { padding: 14px 12px 36px; }
+  .masthead { flex-direction: column; align-items: flex-start; padding: 20px; }
+  .masthead-meta { flex-wrap: wrap; gap: 14px; }
+  .control-bar { flex-direction: column; align-items: stretch; }
+  .tabs { overflow-x: auto; }
+  .dept-grid { grid-template-columns: 1fr; }
+  .dept { border-right: none; }
+  .dept:nth-last-child(-n+2) { border-bottom: 1px solid var(--line-gray); }
+  .dept:last-child { border-bottom: none; }
+  .kpi-strip { grid-template-columns: 1fr; }
+  .kpi { border-right: none; border-bottom: 1px solid var(--line-gray); }
+  .wordmark { font-size: 22px; }
+  .footnote { flex-direction: column; gap: 10px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============================================================
+       MASTHEAD
+       ============================================================ -->
+  <header class="masthead">
+    <div class="brand-lockup">
+      <div class="wordmark">
+        <span class="priority">Priority</span><span class="waste">Waste</span>
+      </div>
+      <div class="tagline">Reliable waste service, done right.</div>
+    </div>
+    <div class="masthead-meta">
+      <div>Period<span><!-- DATA:meta.period -->Q1 2026</span></div>
+      <div>As of<span><!-- DATA:meta.asof -->18 Apr 2026</span></div>
+      <div>For<span><!-- DATA:meta.user -->Vince Hoyumpa, CEO</span></div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CONTROL BAR
+       ============================================================ -->
+  <div class="control-bar">
+    <div class="tabs">
+      <button class="tab active">Overview</button>
+      <button class="tab">Week</button>
+      <button class="tab">Month</button>
+      <button class="tab">Quarter</button>
+      <button class="tab">Year-to-Date</button>
+    </div>
+    <div class="actions">
+      <button class="btn">Refresh</button>
+      <button class="btn">Export PDF</button>
+      <button class="btn primary">Share Brief</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TOP LINE KPIs
+       ============================================================ -->
+  <div class="section-title">
+    <h2>Top Line</h2>
+    <span class="kicker">Five Pulse Metrics</span>
+    <span class="rule"></span>
+  </div>
+
+  <div class="kpi-strip">
+    <div class="kpi">
+      <div class="kpi-label">Revenue (QTD)</div>
+      <div class="kpi-value"><span class="unit">$</span><!-- DATA:company.revenue -->47.2<span class="unit">M</span></div>
+      <div class="kpi-delta up">▲ 12.4% <span class="vs">vs prior Q</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">EBITDA</div>
+      <div class="kpi-value"><span class="unit">$</span><!-- DATA:company.ebitda -->11.8<span class="unit">M</span></div>
+      <div class="kpi-delta up">▲ 8.7% <span class="vs">vs prior Q</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Tons Collected</div>
+      <div class="kpi-value"><!-- DATA:company.tons -->182<span class="unit">K</span></div>
+      <div class="kpi-delta up">▲ 6.8% <span class="vs">vs prior Q</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Active Accounts</div>
+      <div class="kpi-value"><!-- DATA:company.accounts -->38,412</div>
+      <div class="kpi-delta up">▲ 3.1% <span class="vs">vs prior Q</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Fleet Uptime</div>
+      <div class="kpi-value"><!-- DATA:company.uptime -->96.4<span class="unit">%</span></div>
+      <div class="kpi-delta down">▼ 0.3 pts <span class="vs">vs prior Q</span></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       DEPARTMENT PANELS
+       ============================================================ -->
+  <div class="section-title">
+    <h2>Departments</h2>
+    <span class="kicker">Eight Functions · At-a-Glance</span>
+    <span class="rule"></span>
+  </div>
+
+  <div class="dept-grid">
+
+    <!-- 01 · HR ================================================ -->
+    <section class="dept" data-dept="hr">
+      <div class="dept-head">
+        <div class="dept-title">
+          <span class="dept-num">01</span>
+          <span class="dept-name">Human Resources</span>
+        </div>
+        <span class="dept-status good">On Track</span>
+      </div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-label">Headcount</div>
+          <div class="m-value"><!-- DATA:hr.headcount -->1,284</div>
+          <div class="m-delta up">+42 hires QTD</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">CDL Drivers</div>
+          <div class="m-value"><!-- DATA:hr.drivers -->612</div>
+          <div class="m-delta up">▲ 3.8%</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Retention (12m)</div>
+          <div class="m-value"><!-- DATA:hr.retention -->88.6<span class="u">%</span></div>
+          <div class="m-delta up">▲ 1.2 pts</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Open Roles</div>
+          <div class="m-value"><!-- DATA:hr.open_roles -->34</div>
+          <div class="m-delta flat">22 drivers · 12 ops</div>
+        </div>
+      </div>
+      <div class="spark-row">
+        <span class="spark-label">Headcount · 12 mo</span>
+        <svg class="spark" viewBox="0 0 150 30" preserveAspectRatio="none">
+          <path class="fill" d="M0,24 L13,22 L26,23 L39,19 L52,18 L65,16 L78,15 L91,12 L104,11 L117,9 L130,7 L143,5 L150,4 L150,30 L0,30 Z"/>
+          <path class="line" d="M0,24 L13,22 L26,23 L39,19 L52,18 L65,16 L78,15 L91,12 L104,11 L117,9 L130,7 L143,5 L150,4"/>
+          <circle class="dot" cx="150" cy="4" r="3"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 02 · MARKETING ========================================= -->
+    <section class="dept" data-dept="marketing">
+      <div class="dept-head">
+        <div class="dept-title">
+          <span class="dept-num">02</span>
+          <span class="dept-name">Marketing</span>
+        </div>
+        <span class="dept-status good">On Track</span>
+      </div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-label">Leads (Qtr)</div>
+          <div class="m-value"><!-- DATA:mkt.leads -->4,840</div>
+          <div class="m-delta up">▲ 22.1%</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Cost Per Lead</div>
+          <div class="m-value"><span class="u">$</span><!-- DATA:mkt.cpl -->68</div>
+          <div class="m-delta up">▼ 6.2%</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Web Visits</div>
+          <div class="m-value"><!-- DATA:mkt.visits -->312<span class="u">K</span></div>
+          <div class="m-delta up">▲ 14.3%</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Campaigns Live</div>
+          <div class="m-value"><!-- DATA:mkt.campaigns -->12</div>
+          <div class="m-delta flat">5 paid · 7 local</div>
+        </div>
+      </div>
+      <div class="spark-row">
+        <span class="spark-label">Leads · by week</span>
+        <div class="bars">
+          <div class="bar" style="height:40%"></div>
+          <div class="bar" style="height:52%"></div>
+          <div class="bar" style="height:48%"></div>
+          <div class="bar" style="height:60%"></div>
+          <div class="bar" style="height:55%"></div>
+          <div class="bar" style="height:68%"></div>
+          <div class="bar" style="height:72%"></div>
+          <div class="bar" style="height:80%"></div>
+          <div class="bar" style="height:76%"></div>
+          <div class="bar" style="height:85%"></div>
+          <div class="bar" style="height:90%"></div>
+          <div class="bar accent" style="height:100%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 · SALES ============================================= -->
+    <section class="dept" data-dept="sales">
+      <div class="dept-head">
+        <div class="dept-title">
+          <span class="dept-num">03</span>
+          <span class="dept-name">Sales</span>
+        </div>
+        <span class="dept-status good">Above Target</span>
+      </div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-label">New Contracts</div>
+          <div class="m-value"><!-- DATA:sales.contracts -->1,248</div>
+          <div class="m-delta up">▲ 18.4%</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Contracted ARR</div>
+          <div class="m-value"><span class="u">$</span><!-- DATA:sales.arr -->24.6<span class="u">M</span></div>
+          <div class="m-delta up">▲ 9.6%</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Win Rate</div>
+          <div class="m-value"><!-- DATA:sales.winrate -->42.1<span class="u">%</span></div>
+          <div class="m-delta up">▲ 2.1 pts</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Churn (Accts)</div>
+          <div class="m-value"><!-- DATA:sales.churn -->2.8<span class="u">%</span></div>
+          <div class="m-delta up">▼ 0.4 pts</div>
+        </div>
+      </div>
+      <div class="spark-row">
+        <span class="spark-label">Bookings · QTD</span>
+        <svg class="spark" viewBox="0 0 150 30" preserveAspectRatio="none">
+          <path class="fill" d="M0,26 L15,24 L30,22 L45,23 L60,18 L75,16 L90,15 L105,11 L120,9 L135,6 L150,3 L150,30 L0,30 Z"/>
+          <path class="line" d="M0,26 L15,24 L30,22 L45,23 L60,18 L75,16 L90,15 L105,11 L120,9 L135,6 L150,3"/>
+          <circle class="dot" cx="150" cy="3" r="3"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 04 · CUSTOMER SERVICE ================================== -->
+    <section class="dept" data-dept="csr">
+      <div class="dept-head">
+        <div class="dept-title">
+          <span class="dept-num">04</span>
+          <span class="dept-name">Customer Service</span>
+        </div>
+        <span class="dept-status watch">Monitoring</span>
+      </div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-label">CSAT</div>
+          <div class="m-value"><!-- DATA:csr.csat -->4.5<span class="u">/5</span></div>
+          <div class="m-delta flat">— stable</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Missed Pickups</div>
+          <div class="m-value"><!-- DATA:csr.missed -->0.82<span class="u">%</span></div>
+          <div class="m-delta down">▲ 0.11 pts</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Avg Resolve</div>
+          <div class="m-value"><!-- DATA:csr.resolve -->3.4<span class="u">h</span></div>
+          <div class="m-delta up">▼ 18 min</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">First-Call Fix</div>
+          <div class="m-value"><!-- DATA:csr.fcr -->81.4<span class="u">%</span></div>
+          <div class="m-delta up">▲ 2.8 pts</div>
+        </div>
+      </div>
+      <div class="spark-row">
+        <span class="spark-label">Complaint Volume · 12 wk</span>
+        <div class="bars">
+          <div class="bar" style="height:55%"></div>
+          <div class="bar" style="height:60%"></div>
+          <div class="bar" style="height:52%"></div>
+          <div class="bar" style="height:65%"></div>
+          <div class="bar" style="height:70%"></div>
+          <div class="bar" style="height:62%"></div>
+          <div class="bar" style="height:75%"></div>
+          <div class="bar" style="height:80%"></div>
+          <div class="bar" style="height:72%"></div>
+          <div class="bar" style="height:85%"></div>
+          <div class="bar" style="height:90%"></div>
+          <div class="bar accent" style="height:95%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 · LOGISTICS & ROUTES ================================ -->
+    <section class="dept" data-dept="logistics">
+      <div class="dept-head">
+        <div class="dept-title">
+          <span class="dept-num">05</span>
+          <span class="dept-name">Logistics &amp; Routes</span>
+        </div>
+        <span class="dept-status good">On Track</span>
+      </div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-label">Routes Complete</div>
+          <div class="m-value"><!-- DATA:log.routes -->98.6<span class="u">%</span></div>
+          <div class="m-delta up">▲ 0.9 pts</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Tons Collected</div>
+          <div class="m-value"><!-- DATA:log.tons -->182<span class="u">K</span></div>
+          <div class="m-delta up">▲ 6.8%</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Diversion Rate</div>
+          <div class="m-value"><!-- DATA:log.diversion -->34.2<span class="u">%</span></div>
+          <div class="m-delta up">▲ 1.6 pts</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Cost / Stop</div>
+          <div class="m-value"><span class="u">$</span><!-- DATA:log.cps -->4.18</div>
+          <div class="m-delta up">▼ $0.12</div>
+        </div>
+      </div>
+      <div class="spark-row">
+        <span class="spark-label">Route Completion · 12 wk</span>
+        <svg class="spark" viewBox="0 0 150 30" preserveAspectRatio="none">
+          <path class="fill" d="M0,10 L15,8 L30,12 L45,9 L60,11 L75,7 L90,10 L105,6 L120,8 L135,5 L150,4 L150,30 L0,30 Z"/>
+          <path class="line" d="M0,10 L15,8 L30,12 L45,9 L60,11 L75,7 L90,10 L105,6 L120,8 L135,5 L150,4"/>
+          <circle class="dot" cx="150" cy="4" r="3"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 06 · FLEET MAINTENANCE ================================= -->
+    <section class="dept" data-dept="maintenance">
+      <div class="dept-head">
+        <div class="dept-title">
+          <span class="dept-num">06</span>
+          <span class="dept-name">Fleet Maintenance</span>
+        </div>
+        <span class="dept-status watch">Monitoring</span>
+      </div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-label">Trucks Available</div>
+          <div class="m-value"><!-- DATA:maint.available -->218<span class="u">/232</span></div>
+          <div class="m-delta down">▼ 4 vs last wk</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">MTTR</div>
+          <div class="m-value"><!-- DATA:maint.mttr -->2.1<span class="u">h</span></div>
+          <div class="m-delta up">▼ 12 min</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Open Work Orders</div>
+          <div class="m-value"><!-- DATA:maint.wo -->68</div>
+          <div class="m-delta down">▲ 22 this wk</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Preventive %</div>
+          <div class="m-value"><!-- DATA:maint.preventive -->72<span class="u">%</span></div>
+          <div class="m-delta up">▲ 4 pts</div>
+        </div>
+      </div>
+      <div class="spark-row">
+        <span class="spark-label">Work Orders · 12 wk</span>
+        <div class="bars">
+          <div class="bar" style="height:30%"></div>
+          <div class="bar" style="height:42%"></div>
+          <div class="bar" style="height:38%"></div>
+          <div class="bar" style="height:45%"></div>
+          <div class="bar" style="height:50%"></div>
+          <div class="bar" style="height:48%"></div>
+          <div class="bar" style="height:55%"></div>
+          <div class="bar" style="height:52%"></div>
+          <div class="bar" style="height:60%"></div>
+          <div class="bar" style="height:68%"></div>
+          <div class="bar" style="height:75%"></div>
+          <div class="bar accent" style="height:88%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 · FINANCE =========================================== -->
+    <section class="dept" data-dept="finance">
+      <div class="dept-head">
+        <div class="dept-title">
+          <span class="dept-num">07</span>
+          <span class="dept-name">Finance</span>
+        </div>
+        <span class="dept-status good">Healthy</span>
+      </div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-label">Gross Margin</div>
+          <div class="m-value"><!-- DATA:fin.gm -->38.6<span class="u">%</span></div>
+          <div class="m-delta up">▲ 1.1 pts</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">EBITDA Margin</div>
+          <div class="m-value"><!-- DATA:fin.ebitda -->25.0<span class="u">%</span></div>
+          <div class="m-delta up">▲ 0.6 pts</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Cash on Hand</div>
+          <div class="m-value"><span class="u">$</span><!-- DATA:fin.cash -->18.4<span class="u">M</span></div>
+          <div class="m-delta up">▲ $2.1M</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Fuel Cost %</div>
+          <div class="m-value"><!-- DATA:fin.fuel -->11.2<span class="u">%</span></div>
+          <div class="m-delta up">▼ 0.8 pts</div>
+        </div>
+      </div>
+      <div class="spark-row">
+        <span class="spark-label">Cash Position · 12 mo</span>
+        <svg class="spark" viewBox="0 0 150 30" preserveAspectRatio="none">
+          <path class="fill" d="M0,19 L13,17 L26,18 L39,16 L52,14 L65,15 L78,12 L91,9 L104,10 L117,7 L130,6 L143,4 L150,3 L150,30 L0,30 Z"/>
+          <path class="line" d="M0,19 L13,17 L26,18 L39,16 L52,14 L65,15 L78,12 L91,9 L104,10 L117,7 L130,6 L143,4 L150,3"/>
+          <circle class="dot" cx="150" cy="3" r="3"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 08 · BILLING & COLLECTIONS ============================= -->
+    <section class="dept" data-dept="collections">
+      <div class="dept-head">
+        <div class="dept-title">
+          <span class="dept-num">08</span>
+          <span class="dept-name">Billing &amp; Collections</span>
+        </div>
+        <span class="dept-status risk">Needs Attention</span>
+      </div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-label">DSO</div>
+          <div class="m-value"><!-- DATA:col.dso -->48<span class="u">d</span></div>
+          <div class="m-delta down">▲ 3 d vs target</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Collection Rate</div>
+          <div class="m-value"><!-- DATA:col.rate -->92.4<span class="u">%</span></div>
+          <div class="m-delta down">▼ 1.4 pts</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">AR Overdue</div>
+          <div class="m-value"><span class="u">$</span><!-- DATA:col.overdue -->2.6<span class="u">M</span></div>
+          <div class="m-delta down">▲ $0.4M</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Accounts &gt; 90d</div>
+          <div class="m-value"><!-- DATA:col.over90 -->312</div>
+          <div class="m-delta down">▲ 48</div>
+        </div>
+      </div>
+      <div class="spark-row">
+        <span class="spark-label">AR Aging · by bucket</span>
+        <div class="bars">
+          <div class="bar" style="height:85%"></div>
+          <div class="bar" style="height:60%"></div>
+          <div class="bar" style="height:42%"></div>
+          <div class="bar accent" style="height:28%"></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <div class="footnote">
+    <div class="legend">
+      <span class="g"><span class="swatch"></span>On Track</span>
+      <span class="w"><span class="swatch"></span>Monitoring</span>
+      <span class="r"><span class="swatch"></span>Needs Attention</span>
+    </div>
+    <div class="meta">
+      Priority Waste · Internal Use Only · Last refresh <strong><!-- DATA:meta.refresh -->18 Apr 2026, 09:42 UTC</strong>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   PLACEHOLDER DATA LAYER
+   Replace with live data from your backend, then call a
+   render function to hydrate the DOM.
+   ============================================================ */
+const sampleData = {
+  meta:    { period: 'Q1 2026', asof: '18 Apr 2026', user: 'Vince Hoyumpa, CEO', refresh: '18 Apr 2026, 09:42 UTC' },
+  company: { revenue: '47.2M', ebitda: '11.8M', tons: '182K', accounts: '38,412', uptime: '96.4%' },
+  hr:      { headcount: 1284, drivers: 612, retention: 88.6, open_roles: 34 },
+  mkt:     { leads: 4840, cpl: 68, visits: '312K', campaigns: 12 },
+  sales:   { contracts: 1248, arr: '24.6M', winrate: 42.1, churn: 2.8 },
+  csr:     { csat: 4.5, missed: 0.82, resolve: '3.4h', fcr: 81.4 },
+  log:     { routes: 98.6, tons: '182K', diversion: 34.2, cps: 4.18 },
+  maint:   { available: '218/232', mttr: '2.1h', wo: 68, preventive: 72 },
+  fin:     { gm: 38.6, ebitda: 25.0, cash: '18.4M', fuel: 11.2 },
+  col:     { dso: 48, rate: 92.4, overdue: '2.6M', over90: 312 }
+};
+
+/* Period tab interaction (visual only — wire to your data filter) */
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    // TODO: fetch data for selected period and re-render
+  });
+});
+</script>
+</body>
+</html>
