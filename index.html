@@ -855,7 +855,7 @@ function PlaybookCase({ onOpenQA }) {
     driver: { label:"Driver", welcome:"Safe routes today.",
       tools:[{name:"Driver Tablet",status:"live"},{name:"Pre-Trip DVIR",status:"live"},{name:"Weight Ticket",status:"live"},{name:"Route Nav",status:"live"}],
       training:[{doc:"Safe Driving Protocol",updated:"5 days ago"},{doc:"Customer Interaction Guide",updated:"2 weeks ago"},{doc:"DVIR Procedures",updated:"1 month ago"}],
-      path:["Helper","Driver","Lead Driver","Dispatcher"],kpis:["On-time rate","DVIR compliance","Safety score"],contacts:["Dispatch","Fleet Manager","LDC Coordinator"] },
+      path:["Helper","Driver","Lead Driver","Dispatcher"],kpis:["On-time rate","DVIR compliance","Safety score"],contacts:["Dispatch","Fleet Manager","Lead LDC"] },
     exec: { label:"Executive", welcome:"Welcome, leadership.",
       tools:[{name:"Board Dashboard",status:"scoped"},{name:"Financial View",status:"live"},{name:"Strategic Metrics",status:"scoped"},{name:"Events Tracker",status:"live"}],
       training:[{doc:"Company Overview Brief",updated:"yesterday"},{doc:"Strategic Plan 2026",updated:"1 week ago"},{doc:"Board Meeting Framework",updated:"2 weeks ago"}],
@@ -872,7 +872,7 @@ function PlaybookCase({ onOpenQA }) {
           <div className="text-[10px] tracking-[0.3em] text-[#FFC20E] font-bold mb-6">ALREADY STANDARDIZED</div>
           <h3 className="font-display text-2xl text-white mb-4">Training Documents</h3>
           <ul className="space-y-2 mb-8">
-            {["Local Distribution Centers (LDCs)","Sales Team","Customer Service Representatives"].map((t,i) => (
+            {["Logistics Driver Coordinators (LDCs)","Sales Team","Customer Service Representatives"].map((t,i) => (
               <li key={i} className="flex items-center gap-3 text-sm text-white">
                 <div className="w-2 h-2 bg-[#FFC20E]" /> {t}
               </li>
