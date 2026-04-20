@@ -94,7 +94,7 @@ const sectionQAs = {
   ],
   built: [
     { q: "If these aren't in production, who has access?",
-      a: "A small set of internal PW staff across IT, Marketing, and Digital Project Lead — five or six people total. Each app is credentialed. The CSR Dashboard is password-gated. Nothing is customer-facing.",
+      a: "A small set of internal PW staff across IT and Marketing — five or six people total. Each app is credentialed. The CSR Dashboard is password-gated. Nothing is customer-facing.",
       follow: "Audit logs exist for every authenticated session and are retained 90 days per PW security policy. IT can produce the access register for any build on request." },
     { q: "What happens to these builds if we don't proceed?",
       a: "Each can be archived, shelved, or deleted at your direction. No customer data has flowed through any of them. No contracts depend on them. No staff roles are tied to them. They're experimental cost-free assets that can be wound down in a week.",
@@ -440,18 +440,9 @@ function Hero() {
         <p className="text-lg text-neutral-300 italic max-w-3xl mb-6">
           A technology management briefing on how Claude is already producing value at Priority Waste — and where it goes next.
         </p>
-        <p className="text-base text-white max-w-3xl mb-8">
+        <p className="text-base text-white max-w-3xl mb-12">
           <span className="text-[#FFC20E] font-bold">The thesis:</span> Claude is an EBITDA multiplier. Every use case ties to measurable savings — FTE absorption, hours reclaimed, revenue captured. This is not an experiment. It's an operating capability.
         </p>
-        <div className="inline-flex items-stretch mb-12 border border-[#FFC20E]/40">
-          <div className="bg-[#FFC20E] text-black px-5 py-3">
-            <div className="text-[9px] tracking-[0.3em] font-bold">ANCHOR FACT</div>
-            <div className="font-display text-2xl leading-none mt-1">5 TOOLS · 90 DAYS · $0 MARGINAL COST</div>
-          </div>
-          <div className="px-5 py-3 flex items-center">
-            <span className="text-xs text-neutral-400 italic">Built by existing PW staff. No contracts. No new vendors.</span>
-          </div>
-        </div>
 
         {/* Attribution block — audience on left, authors on right */}
         <div className="grid grid-cols-5 gap-8 max-w-5xl mb-16">
@@ -471,7 +462,7 @@ function Hero() {
             <div className="grid grid-cols-2 gap-6">
               <div>
                 <div className="font-display text-2xl tracking-wider text-white">ZACH GOFF</div>
-                <div className="text-sm text-[#FFC20E]">Marketing Director · Digital Project Lead</div>
+                <div className="text-sm text-[#FFC20E]">Marketing Director</div>
               </div>
               <div>
                 <div className="font-display text-2xl tracking-wider text-white">JP BAUER</div>
@@ -1980,7 +1971,7 @@ function App() {
             <div className="text-right">
               <div className="text-[10px] tracking-[0.3em] text-neutral-500">PREPARED BY</div>
               <div className="text-sm text-white">Zach Goff <span className="text-neutral-500">·</span> JP Bauer</div>
-              <div className="text-[10px] text-[#FFC20E]">Marketing &amp; Digital · FP&amp;A &amp; Operations</div>
+              <div className="text-[10px] text-[#FFC20E]">Marketing · FP&amp;A &amp; Operations</div>
             </div>
           </div>
         </footer>
